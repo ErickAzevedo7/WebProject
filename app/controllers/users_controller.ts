@@ -2,16 +2,16 @@ import User from '#models/user'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class UsersController {
-  async index() {
+  async index({ view }: HttpContext) {
     const users = await User.all()
 
-    return users
+    return view.render('pages/users/index', { users: users })
   }
 
-  async show({ params }: HttpContext) {
+  async show({ params, view }: HttpContext) {
     const user = await User.findOrFail(params.id)
 
-    return user
+    return view.render('pages/users/show', { user: user })
   }
 
   async store({ request, response }: HttpContext) {
@@ -21,13 +21,13 @@ export default class UsersController {
 
     const data = {fullName, password, email}
 
+    console.log(typeof(data.password))
+
     const user = new User()
 
     user.merge(data)
 
     await user.save()
-
-    response.status(200)
 
     return response.redirect().toRoute('users.show', { id: user.id })
   }
@@ -52,8 +52,6 @@ export default class UsersController {
     const user = await User.findOrFail(params.id)
 
     await user.delete()
-
-    response.status(200)
 
     return response.redirect().toRoute('users.index')
   }
