@@ -8,9 +8,17 @@
 */
 
 const UsersController = () => import('#controllers/users_controller')
+const AppsController = () => import('#controllers/apps_controller')
 import router from '@adonisjs/core/services/router'
 
 router.on('/').render('pages/auth/signUp')
+
+router
+  .group(() => {
+    router.get('/', [AppsController, 'index']).as('index')
+  })
+  .prefix('/apps')
+  .as('app')
 
 router
   .group(() => {
