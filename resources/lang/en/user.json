@@ -1,0 +1,8 @@
+{
+  "form": {
+    "email": "Email",
+    "username": "Username",
+    "password": "Password",
+    "passwordConfirmation": "Confirm Password"
+  }
+}
