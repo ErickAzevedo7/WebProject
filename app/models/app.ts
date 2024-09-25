@@ -12,7 +12,10 @@ export default class App extends BaseModel {
   declare steamAppid: number
 
   @column()
-  declare shortDescription: number
+  declare shortDescription: string
+
+  @column()
+  declare detailedDescription: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

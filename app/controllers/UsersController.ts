@@ -19,9 +19,7 @@ export default class UsersController {
     const password = request.input('password')
     const email = request.input('email')
 
-    const data = {fullName, password, email}
-
-    console.log(typeof(data.password))
+    const data = { fullName, password, email }
 
     const user = new User()
 
@@ -39,7 +37,7 @@ export default class UsersController {
     const password = request.input('password')
     const email = request.input('email')
 
-    const data = {fullName, password, email}
+    const data = { fullName, password, email }
 
     user.merge(data)
 
