@@ -10,6 +10,10 @@ export default class AppsController {
   async store({ request, response }: HttpContext){
     const name = request.input('name')
 
+    if(await App.findBy('name', name)){
+      return response.redirect().toRoute('apps.show', {name: name})
+    }
+
     const appDetails = await AppService.getAppSteam(name)
 
     if(appDetails){
@@ -26,7 +30,7 @@ export default class AppsController {
 
       await app.save()
 
-      return response.redirect().toRoute('app.show', {name: app.name})
+      return response.redirect().toRoute('apps.show', {name: app.name})
     }
 
     return appDetails
@@ -36,5 +40,9 @@ export default class AppsController {
     const app = await App.findByOrFail('name', params.name)
 
     return view.render('pages/apps/show', {app: app})
+  }
+
+  async search({ view }: HttpContext){
+    return view.render('pages/apps/search')
   }
 }

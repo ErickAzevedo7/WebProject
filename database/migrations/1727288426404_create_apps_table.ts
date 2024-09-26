@@ -8,7 +8,7 @@ export default class extends BaseSchema {
       table.increments('id').notNullable()
       table.string('name').notNullable().unique()
       table.bigint('steam_appid').notNullable().unique()
-      table.string('short_description').nullable()
+      table.text('short_description').nullable()
       table.text('detailed_description').nullable()
 
       table.timestamp('created_at')

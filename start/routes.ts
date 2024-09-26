@@ -15,11 +15,12 @@ router.on('/').render('pages/auth/signUp')
 
 router
   .group(() => {
-    router.get('/', [AppsController, 'store']).as('index')
+    router.get('/', [AppsController, 'search']).as('index')
     router.get('/:name', [AppsController, 'show']).as('show')
+    router.post('/', [AppsController, 'store']).as('store')
   })
   .prefix('/apps')
-  .as('app')
+  .as('apps')
 
 router
   .group(() => {
