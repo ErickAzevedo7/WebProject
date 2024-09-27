@@ -1,5 +1,3 @@
-const html = document.getElementById('test')
+import Alpine from 'alpinejs';
 
-const text = html.innerText
-
-html.innerHTML = html.innerText
+Alpine.start();
