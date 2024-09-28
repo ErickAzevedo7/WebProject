@@ -8,9 +8,18 @@
 */
 
 const UsersController = () => import('#controllers/users_controller')
+const SessionController = () => import('#controllers/session_controller')
 import router from '@adonisjs/core/services/router'
 
 router.on('/').render('pages/home')
+
+router
+  .group(() => {
+    router.get('/login', [SessionController, 'create']).as('create')
+    router.post('/login', [SessionController, 'store']).as('store')
+  })
+.prefix('/sessions')
+.as('sessions')
 
 router
   .group(() => {
