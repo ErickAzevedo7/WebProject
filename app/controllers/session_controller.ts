@@ -6,7 +6,7 @@ export default class SessionController {
   async create({ view }: HttpContext){
     return view.render('pages/sessions/create')
   }
-
+  
   async store({ request, response }: HttpContext) {
     const { email, password } = request.only(['email', 'password'])
 
