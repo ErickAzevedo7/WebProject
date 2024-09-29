@@ -63,10 +63,12 @@
     "@adonisjs/static": "^1.1.1",
     "@adonisjs/vite": "^3.0.0",
     "@vinejs/vine": "^2.1.0",
+    "alpinejs": "^3.14.1",
     "edge.js": "^6.0.2",
     "luxon": "^3.5.0",
     "pg": "^8.12.0",
-    "reflect-metadata": "^0.2.2"
+    "reflect-metadata": "^0.2.2",
+    "steamapi": "^3.0.12"
   },
   "hotHook": {
     "boundaries": [
