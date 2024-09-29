@@ -22,4 +22,10 @@ export default class SessionController {
       return response.abort('Invalid credentials')
     }
   }
+
+  async delete({ auth, response}: HttpContext) {
+    await auth.use('web').logout()
+
+    return response.redirect().toRoute('/')
+  }
 }

@@ -17,6 +17,7 @@ router
   .group(() => {
     router.get('/login', [SessionController, 'create']).as('create')
     router.post('/login', [SessionController, 'store']).as('store')
+    router.get('/logout', [SessionController, 'delete']).as('delete')
   })
 .prefix('/sessions')
 .as('sessions')
