@@ -15,9 +15,8 @@ router.on('/').render('pages/auth/signUp')
 
 router
   .group(() => {
-    router.get('/', [AppsController, 'search']).as('index')
-    router.get('/:name', [AppsController, 'show']).as('show')
-    router.post('/', [AppsController, 'store']).as('store')
+    router.get('/', [AppsController, 'index']).as('index')
+    router.get('/:id', [AppsController, 'show']).as('show')
   })
   .prefix('/apps')
   .as('apps')
