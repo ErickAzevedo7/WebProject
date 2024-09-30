@@ -3,28 +3,27 @@
     x-data
     x-init="
               $nextTick(() => {
-                  const content = $refs.content;
-                  const item = $refs.item;
-                  const clone = item.cloneNode(true);
-                  content.appendChild(clone);
+                  const items = $refs.item;
+                  const content = Array.from(items.children)
+                  content.forEach((item) => {
+                    const clone = item.cloneNode(true);
+                    items.appendChild(clone);
+                  });
               });
       "
     class="relative w-full bg-gray-900 container-block"
   >
     <div
-      class="relative w-full py-3 mx-auto overflow-hidden text-lg italic tracking-wide text-white uppercase bg-gray-900 max-w-7xl sm:text-xs md:text-sm lg:text-base xl:text-xl 2xl:text-2xl"
+      class="relative w-full py-3 mx-auto overflow-hidden text-lg italic tracking-wide text-white uppercase bg-gray-900 max-w-max sm:text-xs md:text-sm lg:text-base xl:text-xl 2xl:text-2xl"
     >
       <div class="absolute left-0 z-20 w-40 h-full bg-gradient-to-r from-gray-900 to-transparent">
       </div>
       <div class="absolute right-0 z-20 w-40 h-full bg-gradient-to-l from-gray-900 to-transparent">
       </div>
-      <div x-ref="content" class="flex animate-marquee">
-        <div
-          x-ref="item"
-          class="flex items-center justify-around flex-shrink-0 w-full py-2 space-x-2 text-white"
-        >
+      <div x-ref="content" class="flex max-w-7xl overflow-hidden">
+        <div x-ref="item" class=" relative gap-4 flex flex-nowrap w-max animate-marquee h-28">
           @each(app in apps)
-            <img class="h-28 fill-current" src="{{ app.headerImage }}" />
+            <img class="h-auto" src="{{ app.headerImage }}" />
           @end
         </div>
       </div>

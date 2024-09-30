@@ -9,18 +9,15 @@ export default {
     extend: {
       // Add custom keyframes
       keyframes: {
-        marquee: {
-          '0%': {
-            transform: 'translateX(0)',
-          },
+        scroll: {
           '100%': {
-            transform: 'translateX(-100%)',
+            transform: 'translateX(calc(-50% - .5rem))',
           },
         },
       },
       // Add custom animations
       animation: {
-        marquee: 'marquee 20s linear infinite',
+        marquee: 'scroll 20s linear infinite',
       },
     },
   },
