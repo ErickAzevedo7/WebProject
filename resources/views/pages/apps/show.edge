@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-  @include('partials/meta')
-</head>
-
-<body>
-  <h1>{{ app.name }}</h1>
-  <p>{{ app.steamAppid }}</p>
-  <p>{{ app.shortDescription }}</p>
-  <div id="test">
-    {{{ app.detailedDescription }}}
+@layout.main()
+  <div class="flex flex-row pl-5">
+    <img class="h-full size-52" src="{{ app.headerImage }}" />
+    <h1 class="text-white text-3xl pl-4">
+      {{ app.name }}
+    </h1>
   </div>
 
-</body>
-
-</html>
+  <p class="text-white">
+    {{ app.shortDescription }}
+  </p>
+@end

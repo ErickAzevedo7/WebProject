@@ -17,6 +17,9 @@ export default class App extends BaseModel {
   @column()
   declare detailedDescription: string
 
+  @column()
+  declare headerImage: string
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

@@ -2,13 +2,15 @@ import App from '#models/app'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class AppsController {
-  async index(){
+  async index({ view }: HttpContext) {
+    const apps = await App.all()
 
+    return view.render('pages/apps/index', { apps: apps })
   }
 
-  async show({ params, view }: HttpContext){
+  async show({ params, view }: HttpContext) {
     const app = await App.findOrFail(params.id)
 
-    return view.render('pages/apps/show', {app: app})
+    return view.render('pages/apps/show', { app: app })
   }
 }

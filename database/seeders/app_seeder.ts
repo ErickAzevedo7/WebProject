@@ -3,11 +3,12 @@ import app from '@adonisjs/core/services/app'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import { readFileSync } from 'fs'
 
-interface SteamApp{
+interface SteamApp {
   name: string
   steamAppid: number
   shortDescription: string | undefined
   detailedDescription: string | undefined
+  headerImage: string | undefined
 }
 
 export default class extends BaseSeeder {
@@ -17,12 +18,13 @@ export default class extends BaseSeeder {
     const rawdata = readFileSync(path)
     const apps = JSON.parse(rawdata.toString())
 
-    for(const steamApp of apps){
-      const data:SteamApp = {
+    for (const steamApp of apps) {
+      const data: SteamApp = {
         name: steamApp.data.name,
         steamAppid: steamApp.data.steam_appid,
         shortDescription: steamApp.data.short_description,
-        detailedDescription: steamApp.data.detailed_description
+        detailedDescription: steamApp.data.detailed_description,
+        headerImage: steamApp.data.header_image,
       }
 
       const app = new App()

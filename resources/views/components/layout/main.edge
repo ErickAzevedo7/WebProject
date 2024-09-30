@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-white">
+  <head>
+    @include('components/layout/partials/meta')
+  </head>
+
+  <body class="bg-gray-900 h-max">
+    <div class="relative overflow-hidden flex flex-col min-h-screen">
+      @include('components/layout/partials/header')
+
+      <main class="mb-auto">
+        {{{ await $slots.main() }}}
+      </main>
+
+      @include('components/layout/partials/footer')
+    </div>
+  </body>
+</html>
