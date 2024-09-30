@@ -9,6 +9,8 @@ interface SteamApp {
   shortDescription: string | undefined
   detailedDescription: string | undefined
   headerImage: string | undefined
+  price: string | undefined
+  background: string | undefined
 }
 
 export default class extends BaseSeeder {
@@ -25,6 +27,12 @@ export default class extends BaseSeeder {
         shortDescription: steamApp.data.short_description,
         detailedDescription: steamApp.data.detailed_description,
         headerImage: steamApp.data.header_image,
+        price: undefined,
+        background: steamApp.data.background_raw,
+      }
+
+      if (steamApp.is_free === true) {
+        data.price = steamApp.data.price_overview.final_formatted
       }
 
       const app = new App()

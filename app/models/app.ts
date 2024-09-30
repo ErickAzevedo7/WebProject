@@ -20,6 +20,12 @@ export default class App extends BaseModel {
   @column()
   declare headerImage: string
 
+  @column()
+  declare price: string
+
+  @column()
+  declare background: string
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

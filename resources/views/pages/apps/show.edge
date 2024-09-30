@@ -1,12 +1,15 @@
 @layout.main()
+  <div class="flex justify-center">
+    <img src="{{ app.background }}" class="opacity-25 fixed size-fit z-0" />
+  </div>
   <div class="flex flex-row pl-5">
-    <img class="h-full size-52" src="{{ app.headerImage }}" />
-    <h1 class="text-white text-3xl pl-4">
+    <img class="h-full size-52 z-10" src="{{ app.headerImage }}" />
+    <h1 class="text-white text-3xl pl-4 z-10 ">
       {{ app.name }}
     </h1>
   </div>
 
-  <p class="text-white">
-    {{ app.shortDescription }}
-  </p>
+  <div class="relative text-white z-10">
+    {{{ app.shortDescription }}}
+  </div>
 @end
