@@ -21,7 +21,6 @@ router
   })
   .prefix('/apps')
   .as('apps')
-router.on('/').render('pages/home')
 
 router
   .group(() => {
