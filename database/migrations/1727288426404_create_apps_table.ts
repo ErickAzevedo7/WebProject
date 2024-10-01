@@ -10,6 +10,9 @@ export default class extends BaseSchema {
       table.bigint('steam_appid').notNullable().unique()
       table.text('short_description').nullable()
       table.text('detailed_description').nullable()
+      table.text('header_image').nullable()
+      table.string('price').nullable()
+      table.text('background').nullable()
 
       table.timestamp('created_at')
       table.timestamp('updated_at')

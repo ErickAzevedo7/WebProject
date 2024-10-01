@@ -1,17 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-  @include('partials/meta')
-</head>
-
-<body>
-  <h1>{{ app.name }}</h1>
-  <p>{{ app.steamAppid }}</p>
-  <p>{{ app.shortDescription }}</p>
-  <div id="test">
-    {{{ app.detailedDescription }}}
+@layout.main()
+  <div class="flex justify-center">
+    <img src="{{ app.background }}" class="opacity-25 fixed w-full z-0" />
+  </div>
+  <div class="flex flex-row pl-5">
+    <img class="h-full size-52 z-10" src="{{ app.headerImage }}" />
+    <h1 class="text-white text-3xl pl-4 z-10 ">
+      {{ app.name }}
+    </h1>
   </div>
 
-</body>
-
-</html>
+  <div class="relative text-white z-10">
+    {{{ app.shortDescription }}}
+  </div>
+@end
