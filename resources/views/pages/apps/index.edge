@@ -20,10 +20,10 @@
       </div>
       <div class="absolute right-0 z-20 w-40 h-full bg-gradient-to-l from-gray-900 to-transparent">
       </div>
-      <div x-ref="content" class="max-w-7xl overflow-hidden">
-        <div x-ref="item" class="gap-4 flex flex-nowrap w-max animate-marquee h-28">
+      <div x-ref="content" class="max-w-7xl overflow-hidden mx-auto">
+        <div x-ref="item" class="gap-4 flex flex-nowrap w-max animate-marquee">
           @each(app in apps)
-            <img class="h-auto" src="{{ app.headerImage }}" />
+            <img class="h-28" src="{{ app.headerImage }}" />
           @end
         </div>
       </div>
