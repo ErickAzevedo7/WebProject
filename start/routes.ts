@@ -7,10 +7,20 @@
 |
 */
 
-const UsersController = () => import('#controllers/users_controller')
+const UsersController = () => import('#controllers/UsersController')
+const AppsController = () => import('#controllers/AppsController')
 const SessionController = () => import('#controllers/session_controller')
 import router from '@adonisjs/core/services/router'
 
+router.on('/').render('pages/auth/signUp')
+
+router
+  .group(() => {
+    router.get('/', [AppsController, 'index']).as('index')
+    router.get('/:id', [AppsController, 'show']).as('show')
+  })
+  .prefix('/apps')
+  .as('apps')
 router.on('/').render('pages/home')
 
 router
