@@ -20,8 +20,8 @@
       </div>
       <div class="absolute right-0 z-20 w-40 h-full bg-gradient-to-l from-gray-900 to-transparent">
       </div>
-      <div x-ref="content" class="flex max-w-7xl overflow-hidden">
-        <div x-ref="item" class=" relative gap-4 flex flex-nowrap w-max animate-marquee h-28">
+      <div x-ref="content" class="max-w-7xl overflow-hidden">
+        <div x-ref="item" class="gap-4 flex flex-nowrap w-max animate-marquee h-28">
           @each(app in apps)
             <img class="h-auto" src="{{ app.headerImage }}" />
           @end

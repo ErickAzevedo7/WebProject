@@ -10,14 +10,14 @@ export default {
       // Add custom keyframes
       keyframes: {
         scroll: {
-          '100%': {
+          to: {
             transform: 'translateX(calc(-50% - .5rem))',
           },
         },
       },
       // Add custom animations
       animation: {
-        marquee: 'scroll 20s linear infinite',
+        marquee: 'scroll 40s linear infinite',
       },
     },
   },
