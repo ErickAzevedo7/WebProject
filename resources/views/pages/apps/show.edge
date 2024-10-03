@@ -1,15 +1,23 @@
 @layout.main()
-  <div class="flex justify-center">
-    <img src="{{ app.background }}" class="opacity-25 fixed w-full z-0" />
+  <div
+    style="background-image: linear-gradient(to top, var(--tw-gradient-stops)), url('{{ app.background }}');"
+    class="opacity-40 absolute w-full h-screen from-gray-900 bg-cover"
+  >
   </div>
-  <div class="flex flex-row pl-5">
+
+  <div class="relative flex flex-row pl-5">
     <img class="h-full size-52 z-10" src="{{ app.headerImage }}" />
-    <h1 class="text-white text-3xl pl-4 z-10 ">
+    <h1 class="text-white text-3xl pl-4">
       {{ app.name }}
     </h1>
   </div>
 
-  <div class="relative text-white z-10">
+  <div class="relative text-white">
     {{{ app.shortDescription }}}
+    <div class="flex flex-row flex-wrap h-fit">
+      @each(screenshot in app.screenshots)
+        <img src="{{ screenshot.pathThumbnail }}" />
+      @end
+    </div>
   </div>
 @end
