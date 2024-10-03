@@ -18,6 +18,11 @@
       @each(screenshot in app.screenshots)
         <img src="{{ screenshot.pathThumbnail }}" />
       @end
+      @each(movie in app.movies)
+        <video>
+          <source src="{{ movie.fullResolution }}"/>
+        </video>
+      @end
     </div>
   </div>
 @end

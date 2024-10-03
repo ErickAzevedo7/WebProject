@@ -12,6 +12,7 @@ export default class AppsController {
     const app = await App.findOrFail(params.id)
 
     await app.load('screenshots')
+    await app.load('movies')
 
     return view.render('pages/apps/show', { app: app })
   }
