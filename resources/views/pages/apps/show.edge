@@ -19,8 +19,8 @@
         <img src="{{ screenshot.pathThumbnail }}" />
       @end
       @each(movie in app.movies)
-        <video>
-          <source src="{{ movie.fullResolution }}"/>
+        <video class="h-1/2 w-1/2" controls>
+          <source src="{{ movie.fullResolution }}" />
         </video>
       @end
     </div>
