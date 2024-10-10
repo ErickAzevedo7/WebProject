@@ -7,7 +7,7 @@ export default class SessionController {
     return view.render('pages/sessions/create')
   }
   
-  async store({ request, response }: HttpContext) {
+  async store({ auth, request, response }: HttpContext) {
     const { email, password } = request.only(['email', 'password'])
 
     const user = await User.findBy('email', email)
@@ -21,6 +21,10 @@ export default class SessionController {
     if (!isPasswordValid) {
       return response.abort('Invalid credentials')
     }
+
+    await auth.use('web').login(user)
+
+    return response.redirect().toRoute('/apps')
   }
 
   async delete({ auth, response}: HttpContext) {

@@ -22,7 +22,17 @@ router
   .prefix('/apps')
   .as('apps')
 
+router.on('/').render('pages/auth/signUp')
+
 router
+  .group(() => {
+    router.get('/', [AppsController, 'index']).as('index')
+    router.get('/:id', [AppsController, 'show']).as('show')
+  })
+  .prefix('/apps')
+  .as('apps')
+
+  router
   .group(() => {
     router.get('/login', [SessionController, 'create']).as('create')
     router.post('/login', [SessionController, 'store']).as('store')
