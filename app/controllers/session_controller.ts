@@ -24,15 +24,11 @@ export default class SessionController {
 
     await auth.use('web').login(user)
 
-    console.log('logou')
-
     return response.redirect().toRoute('/apps')
   }
 
   async delete({ auth, response}: HttpContext) {
     await auth.use('web').logout()
-
-    console.log('deslogou')
 
     return response.redirect().toRoute('/')
   }
