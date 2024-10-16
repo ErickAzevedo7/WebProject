@@ -9,6 +9,7 @@
 
 const UsersController = () => import('#controllers/UsersController')
 const AppsController = () => import('#controllers/AppsController')
+const SessionController = () => import('#controllers/session_controller')
 import router from '@adonisjs/core/services/router'
 
 router.on('/').render('pages/auth/signUp')
@@ -20,6 +21,15 @@ router
   })
   .prefix('/apps')
   .as('apps')
+
+  router
+  .group(() => {
+    router.get('/login', [SessionController, 'create']).as('create')
+    router.post('/login', [SessionController, 'store']).as('store')
+    router.get('/logout', [SessionController, 'delete']).as('delete')
+  })
+.prefix('/sessions')
+.as('sessions')
 
 router
   .group(() => {

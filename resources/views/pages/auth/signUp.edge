@@ -2,12 +2,12 @@
 <html>
 
 <head>
-  @include('partials/meta')
+  @include('components/layout/partials/meta')
 </head>
 
 <body>
   <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-gray-900">
-    @include('partials/header')
+    @include('components/layout/partials/header')
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       @let(action =  route('users.store', {}, { qs: { _method: 'POST' }}))

@@ -41,7 +41,7 @@ export default class extends BaseSeeder {
 
       const screenshots = []
 
-      for(const screenshotData of screenshotsData) {
+      for (const screenshotData of screenshotsData) {
         const screenshot = new Screenshot()
 
         screenshot.pathThumbnail = screenshotData.path_thumbnail
@@ -54,7 +54,7 @@ export default class extends BaseSeeder {
 
       const movies = []
 
-      for(const movieData of moviesData) {
+      for (const movieData of moviesData) {
         const movie = new Movie()
 
         movie.movieId = movieData.id
