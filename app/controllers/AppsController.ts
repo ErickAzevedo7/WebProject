@@ -11,6 +11,9 @@ export default class AppsController {
   async show({ params, view }: HttpContext) {
     const app = await App.findOrFail(params.id)
 
+    await app.load('screenshots')
+    await app.load('movies')
+
     return view.render('pages/apps/show', { app: app })
   }
 }

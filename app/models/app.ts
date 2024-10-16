@@ -1,5 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import Screenshot from '#models/screenshot'
+import Movie from '#models/movie'
+import type { HasMany } from '@adonisjs/lucid/types/relations'
 
 export default class App extends BaseModel {
   @column({ isPrimary: true })
@@ -25,6 +28,12 @@ export default class App extends BaseModel {
 
   @column()
   declare background: string
+
+  @hasMany(() => Screenshot)
+  declare screenshots: HasMany<typeof Screenshot>
+
+  @hasMany(() => Movie)
+  declare movies: HasMany<typeof Movie>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

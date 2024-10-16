@@ -1,4 +1,6 @@
 import App from '#models/app'
+import Movie from '#models/movie'
+import Screenshot from '#models/screenshot'
 import app from '@adonisjs/core/services/app'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import { readFileSync } from 'fs'
@@ -35,11 +37,41 @@ export default class extends BaseSeeder {
         data.price = steamApp.data.price_overview.final_formatted
       }
 
+      const screenshotsData = steamApp.data.screenshots
+
+      const screenshots = []
+
+      for (const screenshotData of screenshotsData) {
+        const screenshot = new Screenshot()
+
+        screenshot.pathThumbnail = screenshotData.path_thumbnail
+        screenshot.pathFull = screenshotData.path_full
+
+        screenshots.push(screenshot)
+      }
+
+      const moviesData = steamApp.data.movies
+
+      const movies = []
+
+      for (const movieData of moviesData) {
+        const movie = new Movie()
+
+        movie.movieId = movieData.id
+        movie.thumbnail = movieData.thumbnail
+        movie.fullResolution = movieData.webm.max
+
+        movies.push(movie)
+      }
+
       const app = new App()
 
       app.merge(data)
 
       await app.save()
+
+      await app.related('screenshots').saveMany(screenshots)
+      await app.related('movies').saveMany(movies)
     }
   }
 }
