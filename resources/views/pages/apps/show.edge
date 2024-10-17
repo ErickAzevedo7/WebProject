@@ -28,22 +28,25 @@
       </div>
     </div>
 
-    @carousel()
-      @slot('slides')
-        @each(movie in app.movies)
-          {
-            full: '{{ movie.fullResolution }}',
-            thumbnail: '{{ movie.thumbnail }}',
-            type: 1,
-          },
-        @end
-        @each(screenshot in app.screenshots)
-          {
-            full: '{{ screenshot.pathFull }}',
-            thumbnail: '{{ screenshot.pathThumbnail }}',
-            type: 0,
-          },
+    <div class="relative text-white w-4/5 mx-auto mt-40 p-5 bg-gray-800 self-center">
+      @carousel()
+        @slot('slides')
+          @each(movie in app.movies)
+            {
+              full: '{{ movie.fullResolution }}',
+              thumbnail: '{{ movie.thumbnail }}',
+              type: 1,
+            },
+          @end
+          @each(screenshot in app.screenshots)
+            {
+              full: '{{ screenshot.pathFull }}',
+              thumbnail: '{{ screenshot.pathThumbnail }}',
+              type: 0,
+            },
+          @end
         @end
       @end
-    @end
-  @end
+    </div>
+  </section>
+@end
