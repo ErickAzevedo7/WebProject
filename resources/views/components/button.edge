@@ -1,0 +1,4 @@
+<button class="{{ $props.get('class') }}" type="{{ type | 'submit' }}">
+  {{{ await $slots.main() }}}
+  <span class="shrink-0 text-lg/none">{{ text }}</span>
+</button>
