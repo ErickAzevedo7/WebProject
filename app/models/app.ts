@@ -1,8 +1,10 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasMany, manyToMany } from '@adonisjs/lucid/orm'
 import Screenshot from '#models/screenshot'
 import Movie from '#models/movie'
-import type { HasMany } from '@adonisjs/lucid/types/relations'
+import type { HasMany, ManyToMany } from '@adonisjs/lucid/types/relations'
+import Publisher from '#models/publisher'
+import Developer from '#models/developer'
 
 export default class App extends BaseModel {
   @column({ isPrimary: true })
@@ -10,6 +12,9 @@ export default class App extends BaseModel {
 
   @column()
   declare name: string
+
+  @column()
+  declare requiredAge: string
 
   @column()
   declare steamAppid: number
@@ -24,6 +29,18 @@ export default class App extends BaseModel {
   declare headerImage: string
 
   @column()
+  declare isFree: boolean
+
+  @column()
+  declare minimalRequirements: string
+
+  @column()
+  declare recomendedRequirements: string
+
+  @column()
+  declare releaseDate: string
+
+  @column()
   declare price: string
 
   @column()
@@ -34,6 +51,12 @@ export default class App extends BaseModel {
 
   @hasMany(() => Movie)
   declare movies: HasMany<typeof Movie>
+
+  @manyToMany(() => Publisher)
+  declare publishers: ManyToMany<typeof Publisher>
+
+  @manyToMany(() => Developer)
+  declare developers: ManyToMany<typeof Developer>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
