@@ -22,22 +22,22 @@ export default class extends BaseSeeder {
     const rawdata = readFileSync(path)
     const apps = JSON.parse(rawdata.toString())
 
-    for (const steamApp of apps) {
-      const data: SteamApp = {
-        name: steamApp.data.name,
-        steamAppid: steamApp.data.steam_appid,
-        shortDescription: steamApp.data.short_description,
-        detailedDescription: steamApp.data.detailed_description,
-        headerImage: steamApp.data.header_image,
+    for (const { data } of apps) {
+      const steamApp: SteamApp = {
+        name: data.name,
+        steamAppid: data.steam_appid,
+        shortDescription: data.short_description,
+        detailedDescription: data.detailed_description,
+        headerImage: data.header_image,
         price: undefined,
-        background: steamApp.data.background_raw,
+        background: data.background_raw,
       }
 
-      if (steamApp.is_free === true) {
-        data.price = steamApp.data.price_overview.final_formatted
+      if (data.is_free === false) {
+        steamApp.price = data.price_overview.final_formatted
       }
 
-      const screenshotsData = steamApp.data.screenshots
+      const screenshotsData = data.screenshots
 
       const screenshots = []
 
@@ -50,7 +50,7 @@ export default class extends BaseSeeder {
         screenshots.push(screenshot)
       }
 
-      const moviesData = steamApp.data.movies
+      const moviesData = data.movies
 
       const movies = []
 
@@ -66,7 +66,7 @@ export default class extends BaseSeeder {
 
       const app = new App()
 
-      app.merge(data)
+      app.merge(steamApp)
 
       await app.save()
 

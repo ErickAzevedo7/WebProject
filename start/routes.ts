@@ -12,8 +12,6 @@ const AppsController = () => import('#controllers/AppsController')
 const SessionController = () => import('#controllers/session_controller')
 import router from '@adonisjs/core/services/router'
 
-router.on('/').render('pages/auth/signUp')
-
 router
   .group(() => {
     router.get('/', [AppsController, 'index']).as('index')
