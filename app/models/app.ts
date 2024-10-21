@@ -5,6 +5,7 @@ import Movie from '#models/movie'
 import type { HasMany, ManyToMany } from '@adonisjs/lucid/types/relations'
 import Publisher from '#models/publisher'
 import Developer from '#models/developer'
+import Tag from '#models/tag'
 
 export default class App extends BaseModel {
   @column({ isPrimary: true })
@@ -57,6 +58,9 @@ export default class App extends BaseModel {
 
   @manyToMany(() => Developer)
   declare developers: ManyToMany<typeof Developer>
+
+  @manyToMany(() => Tag)
+  declare tags: ManyToMany<typeof Tag>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
