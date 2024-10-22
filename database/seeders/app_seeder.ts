@@ -104,6 +104,7 @@ export default class extends BaseSeeder {
 
       await app.related('tags').saveMany(tags)
       await app.related('developers').saveMany(developers)
+      await app.related('publishers').saveMany(publishers)
       await app.related('screenshots').saveMany(screenshots)
       await app.related('movies').saveMany(movies)
     }

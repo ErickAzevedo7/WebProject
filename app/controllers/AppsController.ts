@@ -13,6 +13,9 @@ export default class AppsController {
 
     await app.load('screenshots')
     await app.load('movies')
+    await app.load('developers')
+    await app.load('publishers')
+    await app.load('tags')
 
     return view.render('pages/apps/show', { app: app })
   }
