@@ -61,7 +61,7 @@
     </div>
 
     <div class="relative flex gap-16 text-white max-w-screen-2xl px-8 self-center">
-      <div class="flex flex-col items-center flex-wrap p-2 bg-slate-800 w-3/4 h-auto rounded-md">
+      <div class="flex flex-col items-left flex-wrap gap-10 p-2 bg-slate-800 w-3/4 h-auto rounded-md">
         @carousel()
           @slot('slides')
             @each(movie in app.movies)
@@ -80,14 +80,42 @@
             @end
           @end
         @end
-
-        <div class="flex flex-col my-2">
-          <h1 class="text-2xl">
-            About the game:
-          </h1>
-          <div class="text-lg">
-            {{{ app.detailedDescription }}}
+        <div
+          x-data="{
+          showMore: false,
+          overflow: false,
+          isOverflow(){
+            return this.$refs.game_area_description.scrollHeight > this.$refs.game_area_description.clientHeight;
+          },
+        }"
+          x-init="overflow = isOverflow()"
+          class="flex flex-col"
+        >
+          <div
+            class="game_area_description flex flex-col max-h-[1200px] overflow-hidden"
+            id="game_area_description"
+            x-ref="game_area_description"
+            :class="overflow ? 'max-h-[1200px]' : 'max-h-none'"
+          >
+            <h1 class="text-2xl border-b mb-4">
+              About the game:
+            </h1>
+            <div class="flex flex-col text-lg">
+              {{{ app.detailedDescription }}}
+            </div>
           </div>
+          <div
+            class="flex shrink-0 bg-gradient-to-b from-transparent to-slate-950 h-20 min-w-full -mt-20"
+            x-cloak
+            x-show="overflow"
+          >
+          </div>
+          <a
+            @click="overflow = !overflow"
+            x-cloak
+            x-show="overflow"
+            class="self-center cursor-pointer hover:underline"
+          >Show More</a>
         </div>
       </div>
 

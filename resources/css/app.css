@@ -12,3 +12,66 @@ body {
   height: 100%;
   width: 100%;
 }
+
+.game_area_description * {
+  font-size: 14px;
+}
+.game_area_description p.bb_paragraph {
+  min-height: 0.15em;
+  line-height: 1.5em;
+  margin: 0.5em 0;
+}
+
+.game_area_description p {
+  display: flex;
+  flex-direction: column;
+}
+
+.game_area_description h2.bb_tag {
+  font-size: 14px;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+  letter-spacing: 0.03em;
+  font-weight: normal;
+  padding-top: 2px;
+}
+
+.game_area_description h1 {
+  font-size: 25px;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 10px;
+  letter-spacing: 0.03em;
+  font-weight: normal;
+  padding-top: 2px;
+}
+
+.game_area_description img.bb_img {
+  max-width: 100%;
+  align-self: center;
+}
+
+.game_area_description ul {
+  margin-left: 16px;
+  list-style-type: square;
+}
+
+.game_area_description ul {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 20px;
+  unicode-bidi: isolate;
+}
+
+.bb_ul > li {
+  list-style-position: outside;
+  margin-bottom: 8px;
+}
+
+[x-cloak] {
+  display: none !important;
+}
