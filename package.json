@@ -74,6 +74,7 @@
     "pg": "^8.12.0",
     "prettier-edgejs": "^0.2.31",
     "reflect-metadata": "^0.2.2",
+    "steam-scraper": "^1.0.2",
     "steamapi": "^3.0.12"
   },
   "hotHook": {

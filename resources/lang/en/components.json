@@ -1,0 +1,22 @@
+{
+  "layout": {
+    "main": {
+      "header": {
+        "title": "Header",
+        "nav": {
+          "home": "Home",
+          "about": "About",
+          "contact": "Contact"
+        }
+      },
+      "footer": {
+        "title": "Footer",
+        "nav": {
+          "home": "Home",
+          "about": "About",
+          "contact": "Contact"
+        }
+      }
+    }
+  }
+}
