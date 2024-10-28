@@ -44,9 +44,10 @@
     <div class="text-white text-3xl">
       {{ app.price }}
     </div>
+    @let( text = t('pages.apps.show.buy'))
     @button({
           class: 'size-10 flex items-center justify-center space-x-1 bg-green-500 text-white py-6 px-14 rounded-full',
-    text: 'Buy'})
+    text: text,})
 
       {{ svg('mdi:cart-outline', {class: 'self-center flex-shrink-0 h-6 w-6'} ) }}
     @end
