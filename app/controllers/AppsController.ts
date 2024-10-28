@@ -8,7 +8,7 @@ export default class AppsController {
     return view.render('pages/apps/index', { apps: apps })
   }
 
-  async show({ params, view }: HttpContext) {
+  async show({ request, params, view }: HttpContext) {
     const app = await App.findOrFail(params.id)
 
     await app.load('screenshots')
