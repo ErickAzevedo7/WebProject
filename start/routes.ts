@@ -25,6 +25,7 @@ router
     router.get('/login', [SessionController, 'create']).as('create')
     router.post('/login', [SessionController, 'store']).as('store')
     router.get('/logout', [SessionController, 'delete']).as('delete')
+    router.get('/register', [SessionController, 'register']).as('register')
   })
 .prefix('/sessions')
 .as('sessions')

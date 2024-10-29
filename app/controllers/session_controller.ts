@@ -7,19 +7,19 @@ export default class SessionController {
     return view.render('pages/sessions/create')
   }
   
-  async store({ auth, request, response }: HttpContext) {
+  async store({ auth, request, response, view }: HttpContext) {
     const { email, password } = request.only(['email', 'password'])
 
     const user = await User.findBy('email', email)
 
     if (!user) {
-      return response.abort('Invalid credentials')
+      return view.render('pages/sessions/create')
     }
 
     const isPasswordValid = await hash.verify(user.password, password)
 
     if (!isPasswordValid) {
-      return response.abort('Invalid credentials')
+      return view.render('pages/sessions/create')
     }
 
     await auth.use('web').login(user)
@@ -30,6 +30,10 @@ export default class SessionController {
   async delete({ auth, response}: HttpContext) {
     await auth.use('web').logout()
 
-    return response.redirect().toRoute('/')
+    return response.redirect().toRoute('/apps')
+  }
+
+  async register({ view }: HttpContext) {
+    return view.render('pages/sessions/register')
   }
 }
