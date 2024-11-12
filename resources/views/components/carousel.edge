@@ -20,7 +20,7 @@
     }
   },
 }"
-class="flex flex-col relative mx-auto px-auto overflow-hidden">
+class="flex flex-col w-full relative mx-auto px-auto overflow-hidden">
   <!-- slides -->
   <!-- Change min-h-[50svh] to your preferred height size -->
 
@@ -34,7 +34,7 @@ class="flex flex-col relative mx-auto px-auto overflow-hidden">
 
     <div class="w-full grid grid-rows-none items-center justify-items-center">
       <template x-for="(slide, index) in slides">
-        <div x-show="currentSlideIndex == index + 1" class="w-full col-span-full row-span-full inset-0" x-transition.opacity.duration.1000ms>
+        <div x-show="currentSlideIndex == index + 1" class="relative flex w-full col-span-full row-span-full inset-0 overflow-hidden" x-transition.opacity.duration.1000ms>
           <template x-if="slide.type === 1">
             @video()
               @slot('webm')
@@ -43,8 +43,11 @@ class="flex flex-col relative mx-auto px-auto overflow-hidden">
             @end
           </template>
           <template x-if="slide.type === 0">
-            <img class="w-full object-fill text-neutral-600 dark:text-neutral-300" x-bind:src="slide.full" x-bind:alt="slide.imgAlt" />
+            <img class="w-fit object-fill text-neutral-600 dark:text-neutral-300 shrink-0" x-bind:src="slide.full" x-bind:alt="slide.imgAlt" />
           </template>
+          @if($slots.content)
+            {{{ await $slots.content() }}}
+          @endif
         </div>
       </template>
     </div>
