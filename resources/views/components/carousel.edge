@@ -1,8 +1,12 @@
 <div x-data="{
+  // Sets the time between each slides in milliseconds
+  autoplayIntervalTime: 3500,
   slides: [
     {{{ await $slots.slides() }}}
   ],
   currentSlideIndex: 1,
+  isPaused: false,
+  autoplayInterval: null,
   previous() {
     if (this.currentSlideIndex > 1) {
       this.currentSlideIndex = this.currentSlideIndex - 1
@@ -19,8 +23,20 @@
       this.currentSlideIndex = 1
     }
   },
-}"
-class="flex flex-col w-full relative mx-auto px-auto overflow-hidden">
+  autoplay() {
+    this.autoplayInterval = setInterval(() => {
+        if (! this.isPaused) {
+            this.next()
+        }
+    }, this.autoplayIntervalTime)
+  },
+  // Updates interval time
+  setAutoplayInterval(newIntervalTime) {
+      clearInterval(this.autoplayInterval)
+      this.autoplayIntervalTime = newIntervalTime
+      this.autoplay()
+  },
+}" x-init="autoplay()" class="flex flex-col w-full relative mx-auto px-auto overflow-hidden">
   <!-- slides -->
   <!-- Change min-h-[50svh] to your preferred height size -->
 

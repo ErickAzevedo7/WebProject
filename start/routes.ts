@@ -12,9 +12,10 @@ const AppsController = () => import('#controllers/AppsController')
 const SessionController = () => import('#controllers/session_controller')
 import router from '@adonisjs/core/services/router'
 
+router.get('/', [AppsController, 'index']).as('index')
+
 router
   .group(() => {
-    router.get('/', [AppsController, 'index']).as('index')
     router.get('/:id', [AppsController, 'show']).as('show')
   })
   .prefix('/apps')
