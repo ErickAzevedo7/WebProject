@@ -4,5 +4,10 @@
     "username": "Username",
     "password": "Password",
     "passwordConfirmation": "Confirm Password"
+  },
+  
+  "button": {
+    "submit": "Submit",
+    "signUp": "Sign Up"
   }
 }
