@@ -24,12 +24,12 @@ export default class AuthController {
 
     await auth.use('web').login(user)
 
-    return response.redirect().toRoute('/apps')
+    return response.redirect().toRoute('apps.index')
   }
 
   async delete({ auth, response }: HttpContext) {
     await auth.use('web').logout()
 
-    return response.redirect().toRoute('/apps')
+    return response.redirect().toRoute('apps.index')
   }
 }
