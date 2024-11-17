@@ -4,49 +4,8 @@
     class="opacity-40 absolute w-full h-screen from-gray-900 bg-cover"
   >
   </div>
-  <section class="flex flex-col mt-10">
-    <div class="relative flex px-5 w-screen h-36 justify-between">
-      <div class="flex w-3/5">
-        <img class="max-w-lg max-h-56 z-10" src="{{ app.headerImage }}" />
-        <div class="flex flex-col text-white text-3xl pl-4">
-          <h1>
-            {{ app.name }}
-          </h1>
-          <h2 class="mt-auto w-full text-base text-left">
-            {{{ app.shortDescription }}}
-          </h2>
-        </div>
-      </div>
-
-      <div class="flex grow items-center justify-end">
-        @button({
-          class: 'size-10 flex items-center justify-center space-x-1 bg-green-500 text-white py-6 px-14 mr-16 rounded-full',
-        text: 'Buy'})
-
-          {{ svg('mdi:cart-outline', {class: 'self-center flex-shrink-0 h-6 w-6'} ) }}
-        @end
-      </div>
-    </div>
-
-    <div class="relative text-white w-4/5 mx-auto mt-40 p-5 self-center">
-      @carousel()
-        @slot('slides')
-          @each(movie in app.movies)
-            {
-              full: '{{ movie.fullResolution }}',
-              thumbnail: '{{ movie.thumbnail }}',
-              type: 1,
-            },
-          @end
-          @each(screenshot in app.screenshots)
-            {
-              full: '{{ screenshot.pathFull }}',
-              thumbnail: '{{ screenshot.pathThumbnail }}',
-              type: 0,
-            },
-          @end
-        @end
-      @end
-    </div>
+  <section class="flex flex-col mt-10 gap-28">
+    @include('pages/apps/partials/app_summary')
+    @include('pages/apps/partials/app_details')
   </section>
 @end
