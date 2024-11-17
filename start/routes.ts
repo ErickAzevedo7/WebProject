@@ -9,7 +9,7 @@
 
 const UsersController = () => import('#controllers/UsersController')
 const AppsController = () => import('#controllers/AppsController')
-const SessionController = () => import('#controllers/session_controller')
+const AuthController = () => import('#controllers/AuthController')
 import router from '@adonisjs/core/services/router'
 
 router
@@ -20,19 +20,18 @@ router
   .prefix('/apps')
   .as('apps')
 
-  router
+router
   .group(() => {
-    router.get('/login', [SessionController, 'create']).as('create')
-    router.post('/login', [SessionController, 'store']).as('store')
-    router.get('/logout', [SessionController, 'delete']).as('delete')
-    router.get('/register', [SessionController, 'register']).as('register')
+    router.get('/login', [AuthController, 'create']).as('create')
+    router.post('/login', [AuthController, 'store']).as('store')
+    router.get('/logout', [AuthController, 'delete']).as('delete')
   })
-.prefix('/sessions')
-.as('sessions')
+  .as('auth')
 
 router
   .group(() => {
     router.get('/', [UsersController, 'index']).as('index')
+    router.get('/new', [UsersController, 'create']).as('create')
     router.post('/', [UsersController, 'store']).as('store')
     router.get('/:id', [UsersController, 'show']).as('show')
     router.patch('/:id', [UsersController, 'update']).as('update')

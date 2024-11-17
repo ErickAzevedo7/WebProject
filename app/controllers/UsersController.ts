@@ -14,6 +14,10 @@ export default class UsersController {
     return view.render('pages/users/show', { user: user })
   }
 
+  async create({ view }: HttpContext) {
+    return view.render('pages/users/create')
+  }
+
   async store({ request, response }: HttpContext) {
     const fullName = request.input('name')
     const password = request.input('password')
