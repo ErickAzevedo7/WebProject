@@ -2,6 +2,7 @@
   <section class="flex flex-col mt-10 gap-20">
     <div class="flex max-w-4xl h-64 w-screen self-center">
       @carousel({
+      class: 'p-2 bg-sky-950/75 rounded-md',
       left_button_class: 'z-30 h-fit flex rounded-full items-center justify-center bg-white/40 p-2 text-neutral-600 transition hover:bg-white/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:outline-offset-0 dark:bg-neutral-950/40 dark:text-neutral-300 dark:hover:bg-neutral-950/60 dark:focus-visible:outline-white',
       right_button_class: 'z-30 h-fit flex rounded-full items-center justify-center bg-white/40 p-2 text-neutral-600 transition hover:bg-white/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:outline-offset-0 dark:bg-neutral-950/40 dark:text-neutral-300 dark:hover:bg-neutral-950/60 dark:focus-visible:outline-white',
       })
@@ -17,7 +18,7 @@
         @slot('content')
           @each(app in apps)
             <template x-if=" '{{ app.headerImage }}' === slide.full ">
-              <div class="flex flex-col w-full  p-4 bg-slate-900">
+              <div class="flex flex-col w-full  p-4 ">
                 <h1 class="text-2xl font-bold text-white">
                   {{ app.name }}
                 </h1>
@@ -53,7 +54,7 @@
 
     <div class="flex flex-col flex-nowrap space-y-2 px-40">
       @each(app in apps)
-        <a href="{{ route('apps.show', app) }}" class="flex flex-row h-20 bg-slate-950 hover:bg-black">
+        <a href="{{ route('apps.show', app) }}" class="flex flex-row h-20 bg-sky-950/75 hover:bg-black">
           <img class="h-full" src="{{ app.headerImage }}" />
           <p class="text-white pl-4">
             {{ app.name }}
