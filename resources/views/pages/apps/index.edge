@@ -56,25 +56,27 @@
       <h1 class="text-neutral-300 text-4xl">
         Categories
       </h1>
-      @card()
-        @slot('image')
-          <div
-            class="grid grid-cols-2 max-h-full transition duration-700 ease-out group-hover:scale-105 bg-gradient-to-tr from-cyan-500"
-          >
-            @each(app in apps)
-              <img class="flex opacity-50" src="{{ app.headerImage }}" />
+      <div class="flex space-x-3 self-center max-w-7xl">
+        @each(categorie in categories)
+          @card()
+            @slot('image')
+              <div
+                class="absolute grid grid-cols-2 content-start h-80 w-80 -rotate-45 -translate-y-[3.2rem] -translate-x-10 transition duration-700 ease-out group-hover:scale-105 bg-gradient-to-br to-60% from-cyan-400"
+              >
+                @each(app in categorie.apps)
+                  <img class="flex opacity-30" src="{{ app.headerImage }}" />
+                @end
+              </div>
             @end
-          </div>
+            <div class="absolute flex justify-center size-full">
+              <button
+                type="button"
+                class="absolute self-center cursor-pointer whitespace-nowrap bg-[#0A8CBF] px-4 py-2 text-center text-sm font-medium tracking-wide text-neutral-100 transition hover:text-neutral-600 hover:bg-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0 rounded-md"
+              >{{ categorie.name }}</button>
+            </div>
+          @end
         @end
-        <div>
-        </div>
-        <div class="absolute flex justify-center size-full">
-          <button
-            type="button"
-            class="absolute self-center cursor-pointer whitespace-nowrap bg-[#0A8CBF] px-4 py-2 text-center text-sm font-medium tracking-wide text-neutral-100 transition hover:text-neutral-600 hover:bg-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0 rounded-md"
-          >Categoria</button>
-        </div>
-      @end
+      </div>
     </div>
 
     <div
