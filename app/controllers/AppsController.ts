@@ -3,10 +3,23 @@ import Tag from '#models/tag'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class AppsController {
-  async index({ view }: HttpContext) {
+  async index({ request, view }: HttpContext) {
+    const data = request.qs()
     const apps = await App.all()
     const categories = await Tag.query().orderBy('name')
+    let checked
 
+    if (data.category) {
+      checked = await Tag.query().where('id', data.category)
+    }
+
+    if (checked) {
+      return view.render('pages/apps/index', {
+        apps: apps,
+        categories: categories,
+        checked: checked[0].name,
+      })
+    }
     return view.render('pages/apps/index', { apps: apps, categories: categories })
   }
 
@@ -14,11 +27,14 @@ export default class AppsController {
     let data = []
     let queries = []
     const payload = request.all()
-    for (const key in payload) {
-      data.push(payload[key])
-    }
 
-    console.log(data)
+    if (Array.isArray(payload.category)) {
+      for (const category of payload.category) {
+        data.push(category)
+      }
+    } else if (payload.category) {
+      data.push(payload.category)
+    }
 
     for (const element of data) {
       queries.push(
@@ -26,6 +42,10 @@ export default class AppsController {
           query.where('name', element)
         })
       )
+    }
+
+    if (payload.search !== null) {
+      queries.push(App.query().whereILike('name', `%${payload.search}%`))
     }
 
     const apps = await App.query().intersect(queries)

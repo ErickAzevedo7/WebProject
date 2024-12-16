@@ -58,7 +58,7 @@
           {{ t('pages.home.Categories') }}
         </h1>
         <a
-          href="#"
+          href="{{ route('apps.index') }}"
           class="inline-block border pb-1 px-3 border-white text-white h-full leading-none self-center content-center"
         >
           {{ t('pages.home.Show More') }}
@@ -66,22 +66,28 @@
       </div>
 
       <div class="flex space-x-5 self-center max-w-7xl">
-        @each(categorie in categories)
+        @each(category in categories)
           @card()
             @slot('image')
               <div
                 class="absolute grid grid-cols-2 content-start h-80 w-80 -rotate-45 -translate-y-[3.2rem] -translate-x-10 transition duration-700 ease-out group-hover:scale-105 bg-gradient-to-br to-60% from-cyan-400"
               >
-                @each(app in categorie.apps)
+                @each(app in category.apps)
                   <img class="flex opacity-30" src="{{ app.headerImage }}" />
                 @end
               </div>
             @end
+            <a
+              class="absolute size-full cursor-pointer z-10"
+              href="{{ route('apps.index', {} ,{ qs: { category: category.id } }) }}"
+            >
+
+            </a>
             <div class="absolute flex justify-center size-full">
-              <button
-                type="button"
-                class="absolute self-center cursor-pointer whitespace-nowrap bg-[#0A8CBF] px-4 py-2 text-center text-sm font-medium tracking-wide text-neutral-100 transition hover:text-neutral-600 hover:bg-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0 rounded-md"
-              >{{ categorie.name }}</button>
+              <a
+                href="{{ route('apps.index', {}, { qs: { category: category.id }} ) }}"
+                class="absolute z-20 self-center cursor-pointer whitespace-nowrap bg-[#0A8CBF] px-4 py-2 text-center text-sm font-medium tracking-wide text-neutral-100 transition hover:text-neutral-600 hover:bg-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0 rounded-md"
+              >{{ category.name }}</a>
             </div>
           @end
         @end

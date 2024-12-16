@@ -1,37 +1,68 @@
 @layout.main()
   <section class="flex flex-col gap-20 bg-gradient-to-b from-blue-500/20 to-50%">
     <div class="flex flex-col flex-nowrap space-y-4 p-4 max-w-7xl w-screen self-center rounded-md">
-      <nav class="flex h-20 rounded-md bg-black/80">
-        <div class="hover:bg-gray-900 transition rounded-l-md content-center text-white ">
-          @dropDown({class: 'left-0'})
-            @slot("header")
-              {{ t('pages.apps.index.categories') }}
-            @end
-            <form
-              class="flex flex-col"
-              hx-post="{{ route('apps.filter') }}"
-              hx-trigger="change target:input"
-              hx-target="#result"
-            >
-              @each((category, index) in categories)
-                <div
-                  class="relative cursor-pointer min-h-6 flex items-center justify-start gap-2 bg-gray-800 hover:bg-gray-900 transition px-2"
-                  name="category"
-                >
-                  <input
-                    id="{{ category.name }}"
-                    type="checkbox"
-                    class="before:content[''] relative h-3/4 w-1 checked:bg-cyan-500 appearance-none "
-                    name="{{ category.name }}"
-                    value="{{ category.name }}"
-                  />
-                  <label for="{{ category.name }}" class="w-full cursor-pointer select-none">{{ category.name }}</label>
-                </div>
-              @end
-            </form>
-          @end
+      <form
+        class="flex flex-col gap-10"
+        hx-post="{{ route('apps.filter') }}"
+        hx-trigger="load, change target:input"
+        hx-target="#result"
+        autocomplete="off"
+      >
+        <button type="submit" disabled style="display: none" aria-hidden="true"></button>
+        <div class="relative flex bg-white h-14 w-full max-w-4xl self-center rounded-full">
+          @svg('mdi:search', {
+            width: 40,
+            height: 40,
+            class: 'absolute top-1/2 transform -translate-y-1/2 left-2 text-gray-500'
+          })
+          <label for="searchbar"></label>
+          <input
+            id="searchbar"
+            type="search"
+            name="search"
+            class="size-full rounded-full self-center pl-12 focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-0 focus-visible:outline-cyan-500"
+            placeholder="Search"
+          />
         </div>
-      </nav>
+        <nav class="flex h-20 rounded-md bg-black/80">
+          <div class="hover:bg-gray-900 transition rounded-l-md content-center text-white ">
+            @dropDown({class: 'left-0'})
+              @slot("header")
+                {{ t('pages.apps.index.categories') }}
+              @end
+              <div class="flex flex-col">
+                @each(category in categories)
+                  <div
+                    class="relative cursor-pointer min-h-6 flex items-center justify-start gap-2 bg-gray-800 hover:bg-gray-900 transition px-2"
+                    name="category"
+                  >
+                    @if(category.name === checked)
+                      <input
+                        id="{{ category.name }}"
+                        type="checkbox"
+                        class="before:content[''] relative min-h-4 w-1 checked:bg-cyan-500 appearance-none "
+                        name="category"
+                        value="{{ category.name }}"
+                        checked
+                      />
+                    @else
+                      <input
+                        id="{{ category.name }}"
+                        type="checkbox"
+                        class="before:content[''] relative min-h-4 w-1 checked:bg-cyan-500 appearance-none "
+                        name="category"
+                        value="{{ category.name }}"
+                      />
+                    @end
+                    <label for="{{ category.name }}" class="w-full cursor-pointer select-none">{{ category.name }}</label>
+                  </div>
+                @end
+              </div>
+            @end
+          </div>
+
+        </nav>
+      </form>
       <div id="result" class="flex flex-col space-y-1">
         @each(app in apps)
           <a
