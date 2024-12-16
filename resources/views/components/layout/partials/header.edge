@@ -1,4 +1,4 @@
-<header class="w-full px-8 text-gray-700 bg-black" attributes>
+<header class="w-full px-10 text-gray-700 bg-black" attributes>
   <div
     class="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-full"
   >
@@ -24,13 +24,29 @@
         </nav>
       </div>
 
-      <div
-        class="fixed top-0 left-0 z-40 items-center hidden w-full h-full p-3 text-sm bg-gray-900 bg-opacity-50 md:w-auto md:bg-transparent md:p-0 md:relative md:flex"
-        :class="{'flex': showMenu, 'hidden': !showMenu }"
-      >
+      <nav class="flex flex-wrap h-16 items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8">
         @if(auth.user)
-          @dropDown()
+          @dropDown({class: 'right-0'})
+            @slot('header')
+              <p class="font-medium leading-6">
+                {{ auth.user?.fullName }}
+              </p>
 
+            @end
+            <a
+              href="#_"
+              class="relative flex cursor-default select-none text-white bg-sky-950 hover:bg-sky-800 items-center px-2 py-1.5 text-sm outline-none transition-colors"
+            >
+              @svg('mdi:account', {width: 24, height:24, class: 'w-4 h-4 mr-2'})
+              <span>Profile</span>
+            </a>
+            <a
+              href="{{ route('auth.delete') }}"
+              class="relative flex cursor-default select-none text-white bg-sky-950 hover:bg-sky-800 items-center px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground"
+            >
+              @svg('mdi:logout', {width: 24, height:24, class: 'w-4 h-4 mr-2'})
+              <span>Log out</span>
+            </a>
           @end
         @else
           <div
@@ -48,6 +64,6 @@
             </div>
           </div>
         @end
-      </div>
+      </nav>
     </div>
   </header>

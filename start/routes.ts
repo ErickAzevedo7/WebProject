@@ -10,12 +10,25 @@
 const UsersController = () => import('#controllers/UsersController')
 const AppsController = () => import('#controllers/AppsController')
 const AuthController = () => import('#controllers/AuthController')
+import App from '#models/app'
+import Tag from '#models/tag'
 import router from '@adonisjs/core/services/router'
 
-router.get('/', [AppsController, 'index']).as('index')
+router
+  .get('/', async ({ view }) => {
+    const apps = await App.all()
+    const limit = 6
+
+    const categories = await Tag.query().preload('apps').paginate(1, limit)
+
+    return view.render('pages/home', { apps: apps, categories: categories })
+  })
+  .as('index')
 
 router
   .group(() => {
+    router.get('/', [AppsController, 'index']).as('index')
+    router.post('/', [AppsController, 'filter']).as('filter')
     router.get('/:id', [AppsController, 'show']).as('show')
   })
   .prefix('/apps')

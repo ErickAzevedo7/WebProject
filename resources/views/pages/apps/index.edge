@@ -1,105 +1,75 @@
 @layout.main()
-  <section class="flex flex-col mt-10 gap-20">
-    <div class="flex max-w-7xl h-64 w-screen self-center">
-      @carousel({
-      class: 'p-2 bg-sky-950/75 rounded-md',
-      left_button_class: 'z-30 h-fit flex rounded-full items-center justify-center bg-white/40 p-2 text-neutral-600 transition hover:bg-white/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:outline-offset-0 dark:bg-neutral-950/40 dark:text-neutral-300 dark:hover:bg-neutral-950/60 dark:focus-visible:outline-white',
-      right_button_class: 'z-30 h-fit flex rounded-full items-center justify-center bg-white/40 p-2 text-neutral-600 transition hover:bg-white/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:outline-offset-0 dark:bg-neutral-950/40 dark:text-neutral-300 dark:hover:bg-neutral-950/60 dark:focus-visible:outline-white',
-      })
-        @slot('slides')
-          @each(app in apps)
-            {
-              full: '{{ app.headerImage }}',
-              type: 0,
-            },
-          @end
-        @end
-
-        @slot('content')
-          @each(app in apps)
-            <template x-if=" '{{ app.headerImage }}' === slide.full ">
-              <div class="flex flex-col w-full  p-4 ">
-                <h1 class="text-2xl font-bold text-white">
-                  {{ app.name }}
-                </h1>
-                <p class="text-white text-sm">
-                  {{{ app.shortDescription }}}
-                </p>
-              </div>
-            </template>
-            <template x-if=" '{{ app.headerImage }}' === slide.full ">
-              <a href="{{ route('apps.show', app) }}" class="absolute size-full" />
-            </template>
-          @end
-        @end
-
-        @slot('indicators')
-          <div
-            class="rounded-md bottom-3 md:bottom-5 self-center z-20 flex gap-4 md:gap-3 px-1.5 py-1 md:px-2"
-            role="group"
-            aria-label="slides"
-          >
-            <template x-for="(slide, index) in slides">
-              <button
-                class="size-2 cursor-pointer rounded-full transition"
-                x-on:click="(currentSlideIndex = index + 1), setAutoplayInterval(autoplayIntervalTime)"
-                x-bind:class="[currentSlideIndex === index + 1 ? 'bg-neutral-300' : 'bg-neutral-300/50']"
-                x-bind:aria-label="'slide ' + (index + 1)"
-              ></button>
-            </template>
-          </div>
-        @end
-      @end
-    </div>
-
-    <div class="flex flex-col bg-black p-10 space-y-5">
-      <h1 class="text-neutral-300 text-4xl">
-        Categories
-      </h1>
-      <div class="flex space-x-3 self-center max-w-7xl">
-        @each(categorie in categories)
-          @card()
-            @slot('image')
-              <div
-                class="absolute grid grid-cols-2 content-start h-80 w-80 -rotate-45 -translate-y-[3.2rem] -translate-x-10 transition duration-700 ease-out group-hover:scale-105 bg-gradient-to-br to-60% from-cyan-400"
-              >
-                @each(app in categorie.apps)
-                  <img class="flex opacity-30" src="{{ app.headerImage }}" />
-                @end
-              </div>
+  <section class="flex flex-col gap-20 bg-gradient-to-b from-blue-500/20 to-50%">
+    <div class="flex flex-col flex-nowrap space-y-4 p-4 max-w-7xl w-screen self-center rounded-md">
+      <nav class="flex h-20 rounded-md bg-black/80">
+        <div class="hover:bg-gray-900 transition rounded-l-md content-center text-white ">
+          @dropDown({class: 'left-0'})
+            @slot("header")
+              Categories
             @end
-            <div class="absolute flex justify-center size-full">
-              <button
-                type="button"
-                class="absolute self-center cursor-pointer whitespace-nowrap bg-[#0A8CBF] px-4 py-2 text-center text-sm font-medium tracking-wide text-neutral-100 transition hover:text-neutral-600 hover:bg-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0 rounded-md"
-              >{{ categorie.name }}</button>
-            </div>
+            <form
+              class="flex flex-col"
+              hx-post="{{ route('apps.filter') }}"
+              hx-trigger="change target:input"
+              hx-target="#result"
+            >
+              @each((category, index) in categories)
+                <div
+                  class="relative cursor-pointer min-h-6 flex items-center justify-start gap-2 bg-gray-800 hover:bg-gray-900 transition px-2"
+                  name="category"
+                >
+                  <input
+                    id="{{ category.name }}"
+                    type="checkbox"
+                    class="before:content[''] relative h-3/4 w-1 checked:bg-cyan-500 appearance-none "
+                    name="{{ category.name }}"
+                    value="{{ category.name }}"
+                  />
+                  <label for="{{ category.name }}" class="w-full cursor-pointer select-none">{{ category.name }}</label>
+                </div>
+              @end
+            </form>
           @end
+        </div>
+      </nav>
+      <div id="result" class="flex flex-col space-y-1">
+        @each(app in apps)
+          <a
+            href="{{ route('apps.show', app) }}"
+            class="flex flex-row justify-between h-20 p-2 bg-black/50 hover:bg-black/60 bg-gradient-to-r from-cyan-800 hover:from-cyan-800/60 to-30% "
+          >
+            <img class="h-full" src="{{ app.headerImage }}" />
+            <div class="flex flex-col grow pl-4">
+              <p class="text-white">
+                {{ app.name }}
+              </p>
+            </div>
+            <div class="flex flex-col justify-center">
+              <p class="flex text-white">
+                {{ app.price }}
+              </p>
+            </div>
+          </a>
         @end
       </div>
     </div>
-
-    <div
-      class="flex flex-col flex-nowrap space-y-2 p-4 max-w-7xl w-screen bg-sky-950/75 self-center rounded-md"
-    >
-      @each(app in apps)
-        <a
-          href="{{ route('apps.show', app) }}"
-          class="flex flex-row justify-between h-20 p-2 bg-sky-950/75 hover:bg-black"
-        >
-          <img class="h-full" src="{{ app.headerImage }}" />
-          <div class="flex flex-col grow pl-4">
-            <p class="text-white">
-              {{ app.name }}
-            </p>
-          </div>
-          <div class="flex flex-col justify-center">
-            <p class="flex text-white">
-              {{ app.price }}
-            </p>
-          </div>
-        </a>
-      @end
-    </div>
   </section>
+  {{-- <script>
+    document.getElementsByName("category").forEach(checkbox => {
+      input = checkbox.getElementsByTagName("input")[0];
+      input.addEventListener("change", event => {
+        console.log("input changed");
+        const data = {
+          category: "input.id"
+        };
+        fetch("{{ route('apps.filter') }}", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
+      });
+    });
+  </script> --}}
 @end
