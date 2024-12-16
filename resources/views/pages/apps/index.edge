@@ -5,7 +5,7 @@
         <div class="hover:bg-gray-900 transition rounded-l-md content-center text-white ">
           @dropDown({class: 'left-0'})
             @slot("header")
-              Categories
+              {{ t('pages.apps.index.categories') }}
             @end
             <form
               class="flex flex-col"
@@ -54,22 +54,4 @@
       </div>
     </div>
   </section>
-  {{-- <script>
-    document.getElementsByName("category").forEach(checkbox => {
-      input = checkbox.getElementsByTagName("input")[0];
-      input.addEventListener("change", event => {
-        console.log("input changed");
-        const data = {
-          category: "input.id"
-        };
-        fetch("{{ route('apps.filter') }}", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(data)
-        });
-      });
-    });
-  </script> --}}
 @end

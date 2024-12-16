@@ -55,13 +55,13 @@
     <div class="flex flex-col bg-black p-10 space-y-5">
       <div class="flex justify-between h-10">
         <h1 class="text-neutral-300 text-4xl/none pb-1">
-          Categories
+          {{ t('pages.home.Categories') }}
         </h1>
         <a
           href="#"
           class="inline-block border pb-1 px-3 border-white text-white h-full leading-none self-center content-center"
         >
-          Ver mais
+          {{ t('pages.home.Show More') }}
         </a>
       </div>
 
@@ -86,29 +86,6 @@
           @end
         @end
       </div>
-    </div>
-
-    <div
-      class="flex flex-col flex-nowrap space-y-2 p-4 max-w-7xl w-screen bg-sky-950/75 self-center rounded-md"
-    >
-      @each(app in apps)
-        <a
-          href="{{ route('apps.show', app) }}"
-          class="flex flex-row justify-between h-20 p-2 bg-sky-950/75 hover:bg-black"
-        >
-          <img class="h-full" src="{{ app.headerImage }}" />
-          <div class="flex flex-col grow pl-4">
-            <p class="text-white">
-              {{ app.name }}
-            </p>
-          </div>
-          <div class="flex flex-col justify-center">
-            <p class="flex text-white">
-              {{ app.price }}
-            </p>
-          </div>
-        </a>
-      @end
     </div>
   </section>
 @end

@@ -28,7 +28,7 @@
     @keydown.down.prevent="$focus.wrap().next()"
     @keydown.up.prevent="$focus.wrap().previous()"
     role="menu"
-    {{ $props.merge({class: ['absolute top-11 flex w-fit h-96 overflow-y-scroll min-w-[12rem] flex-col overflow-hidden rounded-md border border-gray-700']}).toAttrs() }}
+    {{ $props.merge({class: ['absolute top-11 flex w-fit max-h-96 overflow-y-scroll min-w-[12rem] flex-col overflow-hidden rounded-md border border-gray-700']}).toAttrs() }}
   >
     {{{ await $slots.main() }}}
   </div>

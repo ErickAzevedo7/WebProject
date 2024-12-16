@@ -5,8 +5,13 @@
         "title": "Header",
         "nav": {
           "home": "Home",
-          "about": "About",
-          "contact": "Contact"
+          "Catalog": "Catalog",
+          "Sign in": "Sign in",
+          "Sign up": "Sign up"
+        },
+        "user": {
+          "profile": "Profile",
+          "logout": "Logout"
         }
       },
       "footer": {
