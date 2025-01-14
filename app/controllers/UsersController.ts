@@ -1,5 +1,7 @@
+import Cart from '#models/cart'
 import User from '#models/user'
 import type { HttpContext } from '@adonisjs/core/http'
+import { createUserValidator, patchUserValidator } from '#validators/user'
 
 export default class UsersController {
   async index({ view }: HttpContext) {
@@ -19,35 +21,39 @@ export default class UsersController {
   }
 
   async store({ request, response }: HttpContext) {
-    const fullName = request.input('name')
-    const password = request.input('password')
-    const email = request.input('email')
-
-    const data = { fullName, password, email }
+    console.log(request.all())
+    const payload = await request.validateUsing(createUserValidator)
 
     const user = new User()
 
-    user.merge(data)
+    const cart = new Cart()
+
+    await user.merge(payload)
 
     await user.save()
 
-    return response.redirect().toRoute('users.show', { id: user.id })
+    user.related('cart').save(cart)
+
+    return response.redirect().toRoute('index')
   }
 
-  async update({ params, request, response }: HttpContext) {
+  async edit({ params, view }: HttpContext) {
     const user = await User.findOrFail(params.id)
 
-    const fullName = request.input('name')
-    const password = request.input('password')
-    const email = request.input('email')
+    return view.render('pages/users/edit', { user: user })
+  }
 
-    const data = { fullName, password, email }
+  async patch({ params, request, response }: HttpContext) {
+    console.log('sadasdasdasdasdasd')
+    const user = await User.findOrFail(params.id)
 
-    user.merge(data)
+    const payload = await request.validateUsing(patchUserValidator)
+
+    user.merge(payload)
 
     await user.save()
 
-    return response.redirect().toRoute('users.show', { id: user.id })
+    return response.redirect().toRoute('index')
   }
 
   async destroy({ params, response }: HttpContext) {

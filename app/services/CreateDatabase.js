@@ -4,6 +4,7 @@ import scraper from 'steam-scraper'
 
 const path = '/home/infinity/Project/WebProject/database/data/appList.js'
 const newpath = '/home/infinity/Project/WebProject/database/data/apps.js'
+const fullDataPath = '/home/infinity/Project/WebProject/database/data/fullData.js'
 
 const gameNames = [
   'ELDEN RING',
@@ -26,21 +27,62 @@ const json = JSON.parse(rawdata.toString())
 
 const apps = Object.values(json.applist.apps)
 
-for (const game of gameNames) {
-  const app = apps.find((app) => app.name === game)
+const steam = new SteamAPI(false)
 
-  const steam = new SteamAPI(false)
+const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 
-  const data = await steam.getGameDetails(app.appid)
+//330000
+const test = async () => {
+  fs.appendFileSync(fullDataPath, '[')
 
-  const tag = await getTag(app.appid)
+  let count = 0
+  for (const app of apps) {
+    if (count === 180) {
+      await sleep(330000)
+      count = 0
+    }
 
-  data.tags = tag
+    try {
+      const data = await steam.getGameDetails(app.appid)
 
-  gamesDescription.push(data)
+      const tag = await getTag(app.appid)
+
+      data.tags = tag
+
+      fs.appendFileSync(fullDataPath, JSON.stringify(data) + ',')
+    } catch (e) {
+      if (e.message === 'Too Many Requests') {
+        console.log('Too Many Requests')
+        await sleep(330000)
+        count = 0
+      }
+      count++
+      continue
+    }
+
+    count++
+  }
+
+  fs.appendFileSync(fullDataPath, ']')
 }
 
-fs.writeFileSync(newpath, JSON.stringify(gamesDescription))
+test()
+
+// for (const game of gameNames) {
+//   const app = apps.find((app) => app.name === game)
+
+//   const steam = new SteamAPI(false)
+
+//   const data = await steam.getGameDetails(app.appid)
+
+//   const tag = await getTag(app.appid)
+
+//   data.tags = tag
+
+//   fs.appendFileSync(fullDataPath, JSON.stringify(data) + ',')
+// }
+
+// fs.writeFileSync(newpath, JSON.stringify(gamesDescription))
 
 async function getTag(appId) {
   const tag = await new Promise((resolve, reject) => {
@@ -49,7 +91,9 @@ async function getTag(appId) {
         reject(err)
       }
 
-      resolve(dataTag.tags)
+      if (dataTag) {
+        resolve(dataTag.tags)
+      }
     })
   })
   return tag

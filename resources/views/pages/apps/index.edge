@@ -1,9 +1,9 @@
 @layout.main()
   <section class="flex flex-col gap-20 bg-gradient-to-b from-blue-500/20 to-50%">
-    <div class="flex flex-col flex-nowrap space-y-4 p-4 max-w-7xl w-screen self-center rounded-md">
+    <div class="flex flex-col flex-nowrap p-4 max-w-7xl w-screen self-center rounded-md">
       <form
-        class="flex flex-col gap-10"
-        hx-post="{{ route('apps.filter') }}"
+        class="flex flex-col gap-10 mb-2"
+        hx-post="{{ route('apps.filter', {page: 1}) }}"
         hx-trigger="load, change target:input"
         hx-target="#result"
         autocomplete="off"
@@ -77,11 +77,33 @@
             </div>
             <div class="flex flex-col justify-center">
               <p class="flex text-white">
-                {{ app.price }}
+                @if(app.price === null)
+                  Free
+                @else
+                  {{ app.price }}
+                @end
               </p>
             </div>
           </a>
         @end
+      </div>
+
+      <div class="flex rounded-full bg-black/20 self-center mt-2">
+        <button
+          class="flex size-full p-2"
+          hx-get="{{ route('apps.paginate', {page: 2}) }}"
+          hx-trigger="click"
+          name="page"
+          value=""
+          hx-target="#result"
+          hx-swap="afterend"
+        >
+          @svg('mdi:arrow-down', {
+            width: 30,
+            height: 30,
+            class: 'text-gray-500'
+          })
+        </button>
       </div>
     </div>
   </section>
