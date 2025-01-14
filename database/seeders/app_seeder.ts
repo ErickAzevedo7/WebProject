@@ -18,6 +18,7 @@ interface SteamApp {
   isFree: boolean
   minimalRequirements: string
   recomendedRequirements: string
+  recommendations?: number
   releaseDate: string
   price?: string
   background: string | undefined
@@ -25,9 +26,10 @@ interface SteamApp {
 
 export default class extends BaseSeeder {
   async run() {
-    const path = app.seedersPath('../data/apps.js')
+    const path = app.seedersPath('../data/fullData.js')
 
-    const rawdata = readFileSync(path)
+    const rawdata = readFileSync(path, 'utf8')
+
     const apps = JSON.parse(rawdata.toString())
 
     for (const data of apps) {
@@ -45,68 +47,143 @@ export default class extends BaseSeeder {
         background: data.background_raw,
       }
 
+      if (data.recommendations) {
+        steamApp.recommendations = data.recommendations.total
+      } else {
+        steamApp.recommendations = 0
+      }
+
       if (data.is_free === false) {
-        steamApp.price = data.price_overview.final_formatted
+        if (data.price_overview) steamApp.price = data.price_overview.final_formatted
       }
 
       const screenshotsData = data.screenshots
       const screenshots = []
-      for (const screenshotData of screenshotsData) {
-        const screenshot = await Screenshot.create({
-          pathThumbnail: screenshotData.path_thumbnail,
-          pathFull: screenshotData.path_full,
-        })
+      if (screenshotsData) {
+        for (const screenshotData of screenshotsData) {
+          if (screenshots.includes(screenshotData)) {
+            continue
+          }
+          const screenshot = await Screenshot.create({
+            pathThumbnail: screenshotData.path_thumbnail,
+            pathFull: screenshotData.path_full,
+          })
 
-        screenshots.push(screenshot)
+          screenshots.push(screenshot)
+        }
+      }
+
+      if (data.steam_appid === 177) {
+        console.log(screenshots)
       }
 
       const moviesData = data.movies
       const movies = []
-      for (const movieData of moviesData) {
-        const movie = await Movie.create({
-          movieId: movieData.id,
-          thumbnail: movieData.thumbnail,
-          fullResolution: movieData.webm.max,
-        })
+      if (moviesData) {
+        for (const movieData of moviesData) {
+          if (movies.includes(movieData)) {
+            continue
+          }
 
-        movies.push(movie)
+          try {
+            const movie = await Movie.create({
+              movieId: movieData.id,
+              thumbnail: movieData.thumbnail,
+              fullResolution: movieData.webm.max,
+            })
+
+            movies.push(movie)
+          } catch (error) {
+            console.error(error)
+          }
+        }
       }
 
       const developersData = data.developers
       const developers = []
-      for (const developerData of developersData) {
-        const developer = await Developer.firstOrCreate({ name: developerData })
+      if (developersData) {
+        for (const developerData of developersData) {
+          if (developers.includes(developerData)) {
+            continue
+          }
+          try {
+            const developer = await Developer.firstOrCreate({ name: developerData })
 
-        developers.push(developer)
+            developers.push(developer)
+          } catch (error) {
+            console.error(error)
+          }
+        }
       }
 
       const publishersData = data.publishers
       const publishers = []
-      for (const publisherData of publishersData) {
-        const publisher = await Publisher.firstOrCreate({ name: publisherData })
+      if (publishersData) {
+        for (const publisherData of publishersData) {
+          if (publishers.includes(publisherData)) {
+            continue
+          }
+          try {
+            const publisher = await Publisher.firstOrCreate({ name: publisherData })
 
-        publishers.push(publisher)
+            publishers.push(publisher)
+          } catch (error) {
+            console.error(error)
+          }
+        }
       }
 
       const tagsData = data.tags
       const tags = []
-      for (const tagData of tagsData) {
-        const tag = await Tag.firstOrCreate({ name: tagData })
+      if (tagsData) {
+        for (const tagData of tagsData) {
+          if (tags.includes(tagData)) {
+            continue
+          }
+          const tag = await Tag.firstOrCreate({ name: tagData })
 
-        tags.push(tag)
+          tags.push(tag)
+        }
       }
 
       const app = new App()
 
       app.merge(steamApp)
 
-      await app.save()
+      try {
+        await app.save()
+      } catch (error) {
+        console.error(error)
+      }
+      try {
+        await app.related('tags').saveMany(tags)
+      } catch (error) {
+        console.error(error)
+      }
 
-      await app.related('tags').saveMany(tags)
-      await app.related('developers').saveMany(developers)
-      await app.related('publishers').saveMany(publishers)
-      await app.related('screenshots').saveMany(screenshots)
-      await app.related('movies').saveMany(movies)
+      try {
+        await app.related('developers').saveMany(developers)
+      } catch (error) {
+        console.error(error)
+      }
+
+      try {
+        await app.related('publishers').saveMany(publishers)
+      } catch (error) {
+        console.error(error)
+      }
+
+      try {
+        await app.related('screenshots').saveMany(screenshots)
+      } catch (error) {
+        console.error(error)
+      }
+
+      try {
+        await app.related('movies').saveMany(movies)
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 }

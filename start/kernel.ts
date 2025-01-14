@@ -38,7 +38,8 @@ router.use([
   () => import('@adonisjs/shield/shield_middleware'),
   () => import('@adonisjs/auth/initialize_auth_middleware'),
   () => import('#middleware/detect_user_locale_middleware'),
-  () => import('#middleware/initialize_bouncer_middleware')
+  () => import('#middleware/initialize_bouncer_middleware'),
+  () => import('#middleware/silent_auth_middleware'),
 ])
 
 /**
@@ -46,6 +47,7 @@ router.use([
  * the routes or the routes group.
  */
 export const middleware = router.named({
+  cartItems: () => import('#middleware/cart_items_middleware'),
   guest: () => import('#middleware/guest_middleware'),
   auth: () => import('#middleware/auth_middleware'),
 })

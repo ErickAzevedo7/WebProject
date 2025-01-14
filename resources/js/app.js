@@ -1,3 +1,8 @@
-import Alpine from 'alpinejs';
+import Alpine from 'alpinejs'
+import Cookies from 'js-cookie'
 
-Alpine.start();
+import 'htmx.org'
+
+window.Cookies = Cookies
+
+Alpine.start()

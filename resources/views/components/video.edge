@@ -155,14 +155,14 @@
   x-ref="videoContainer"
   @mouseleave="mouseleave=true"
   @mousemove="mousemoveVideo"
-  class="relative overflow-hidden aspect-video"
+  class="relative w-full overflow-hidden aspect-video"
 >
   <video
     x-ref="player"
     @loadedmetadata="metaDataLoaded"
     @timeupdate="timeUpdatedInterval"
     @ended="videoEnded"
-    preload="none"
+    preload="auto"
     :poster="poster"
     class="relative z-10 object-cover w-full h-full bg-black"
     crossorigin="anonymous"

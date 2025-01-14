@@ -15,6 +15,7 @@ export default class extends BaseSchema {
       table.boolean('is_free')
       table.text('minimal_requirements')
       table.text('recomended_requirements')
+      table.bigint('recommendations')
       table.string('release_date')
       table.string('price').nullable()
       table.text('background').nullable()

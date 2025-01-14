@@ -1,43 +1,110 @@
 @layout.main()
-  <div
-    x-data
-    x-init="
-              $nextTick(() => {
-                  const items = $refs.item;
-                  const content = Array.from(items.children)
-                  content.forEach((item) => {
-                    const clone = item.cloneNode(true);
-                    items.appendChild(clone);
-                  });
-              });
-            "
-    class="relative w-full bg-gray-900 container-block"
-  >
-    <div
-      class="relative w-full py-3 mx-auto overflow-hidden text-lg italic tracking-wide text-white uppercase bg-gray-900 max-w-max sm:text-xs md:text-sm lg:text-base xl:text-xl 2xl:text-2xl"
-    >
-      <div class="absolute left-0 z-20 w-40 h-full bg-gradient-to-r from-gray-900 to-transparent">
-      </div>
-      <div class="absolute right-0 z-20 w-40 h-full bg-gradient-to-l from-gray-900 to-transparent">
-      </div>
-      <div x-ref="content" class="max-w-7xl overflow-hidden mx-auto">
-        <div x-ref="item" class="gap-4 flex flex-nowrap w-max animate-marquee">
-          @each(app in apps)
-            <img class="h-28" src="{{ app.headerImage }}" />
-          @end
+  <section class="flex flex-col gap-20 bg-gradient-to-b from-blue-500/20 to-50%">
+    <div class="flex flex-col flex-nowrap p-4 max-w-7xl w-screen self-center rounded-md">
+      <form
+        class="flex flex-col gap-10 mb-2"
+        hx-post="{{ route('apps.filter', {page: 1}) }}"
+        hx-trigger="load, change target:input"
+        hx-target="#result"
+        autocomplete="off"
+      >
+        <button type="submit" disabled style="display: none" aria-hidden="true"></button>
+        <div class="relative flex bg-white h-14 w-full max-w-4xl self-center rounded-full">
+          @svg('mdi:search', {
+            width: 40,
+            height: 40,
+            class: 'absolute top-1/2 transform -translate-y-1/2 left-2 text-gray-500'
+          })
+          <label for="searchbar"></label>
+          <input
+            id="searchbar"
+            type="search"
+            name="search"
+            class="size-full rounded-full self-center pl-12 focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-0 focus-visible:outline-cyan-500"
+            placeholder="Search"
+          />
         </div>
+        <nav class="flex h-20 rounded-md bg-black/80">
+          <div class="hover:bg-gray-900 transition rounded-l-md content-center text-white ">
+            @dropDown({class: 'left-0'})
+              @slot("header")
+                {{ t('pages.apps.index.categories') }}
+              @end
+              <div class="flex flex-col">
+                @each(category in categories)
+                  <div
+                    class="relative cursor-pointer min-h-6 flex items-center justify-start gap-2 bg-gray-800 hover:bg-gray-900 transition px-2"
+                    name="category"
+                  >
+                    @if(category.name === checked)
+                      <input
+                        id="{{ category.name }}"
+                        type="checkbox"
+                        class="before:content[''] relative min-h-4 w-1 checked:bg-cyan-500 appearance-none "
+                        name="category"
+                        value="{{ category.name }}"
+                        checked
+                      />
+                    @else
+                      <input
+                        id="{{ category.name }}"
+                        type="checkbox"
+                        class="before:content[''] relative min-h-4 w-1 checked:bg-cyan-500 appearance-none "
+                        name="category"
+                        value="{{ category.name }}"
+                      />
+                    @end
+                    <label for="{{ category.name }}" class="w-full cursor-pointer select-none">{{ category.name }}</label>
+                  </div>
+                @end
+              </div>
+            @end
+          </div>
+
+        </nav>
+      </form>
+      <div id="result" class="flex flex-col space-y-1">
+        @each(app in apps)
+          <a
+            href="{{ route('apps.show', app) }}"
+            class="flex flex-row justify-between h-20 p-2 bg-black/50 hover:bg-black/60 bg-gradient-to-r from-cyan-800 hover:from-cyan-800/60 to-30% "
+          >
+            <img class="h-full" src="{{ app.headerImage }}" />
+            <div class="flex flex-col grow pl-4">
+              <p class="text-white">
+                {{ app.name }}
+              </p>
+            </div>
+            <div class="flex flex-col justify-center">
+              <p class="flex text-white">
+                @if(app.price === null)
+                  Free
+                @else
+                  {{ app.price }}
+                @end
+              </p>
+            </div>
+          </a>
+        @end
+      </div>
+
+      <div class="flex rounded-full bg-black/20 self-center mt-2">
+        <button
+          class="flex size-full p-2"
+          hx-get="{{ route('apps.paginate', {page: 2}) }}"
+          hx-trigger="click"
+          name="page"
+          value=""
+          hx-target="#result"
+          hx-swap="afterend"
+        >
+          @svg('mdi:arrow-down', {
+            width: 30,
+            height: 30,
+            class: 'text-gray-500'
+          })
+        </button>
       </div>
     </div>
-  </div>
-
-  <div class="flex flex-col flex-nowrap space-y-2 px-40">
-    @each(app in apps)
-      <a href="{{ route('apps.show', app) }}" class="flex flex-row h-20 bg-slate-950 hover:bg-black">
-        <img class="h-full" src="{{ app.headerImage }}" />
-        <p class="text-white pl-4">
-          {{ app.name }}
-        </p>
-      </a>
-    @end
-  </div>
+  </section>
 @end

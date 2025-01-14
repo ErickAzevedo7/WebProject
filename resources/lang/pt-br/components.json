@@ -1,0 +1,22 @@
+{
+  "layout": {
+    "main": {
+      "header": {
+        "nav": {
+          "Catalog": "Catálogo",
+          "Sign in": "Entrar",
+          "Sign up": "Inscrever-se"
+        },
+        "user": {
+          "profile": "Perfil",
+          "logout": "Sair"
+        }
+      },
+      "footer": {
+        "nav": {
+          "home": "Inicio"
+        }
+      }
+    }
+  }
+}

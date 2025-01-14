@@ -1,0 +1,59 @@
+@layout.main()
+  <section class="flex flex-col gap-10 mt-5">
+    <h1 class="text-7xl font-bold text-center text-gray-200">
+      {{ t('pages.cart.index.Your_cart') }}
+    </h1>
+    <div class="flex gap-5 max-w-7xl w-full min-h-svh h-screen self-center">
+      <div class="flex flex-col p-4 w-4/6 bg-black/50 h-fit min-h-60 rounded-lg gap-2">
+        <h1 class="text-white text-3xl font-medium border-b border-white/30 mb-4">
+          {{ t('pages.cart.index.Your_Products') }}
+        </h1>
+        @if(!apps || apps.length === 0)
+          <div class="flex size-full min-h-32 justify-center">
+            <p class="text-gray-300 text-center text-xl font-medium self-center">
+              {{ t('pages.cart.index.No_products') }}
+            </p>
+          </div>
+        @end
+        @each(app in apps)
+          <div class="flex flex-row justify-between h-fit p-2 bg-white/5 ">
+            <img class="h-28" src="{{ app.headerImage }}" />
+            <div class="flex flex-col grow pl-4">
+              <p class="text-white text-xl font-medium">
+                {{ app.name }}
+              </p>
+              <div class="flex w-full h-full self-end justify-end pr-3">
+                <p class="text-white text-xl font-medium self-center">
+                  {{ app.price }}
+                </p>
+              </div>
+              <div class="flex w-full self-end justify-end pr-3">
+                <form action="{{ route('cart.destroy', app) }}" method="post">
+                  <button class="flex text-white/50 text-sm self-end text-end underline" type="submit">
+                    {{ t('pages.cart.index.Remove') }}
+                  </button>
+                </form>
+              </div>
+
+            </div>
+          </div>
+        @end
+      </div>
+      <div class="h-fit min-h-32 w-2/6 ml-4 p-4 rounded-lg bg-black/50">
+        <div class="flex flex-col gap-5">
+          <p class="text-white text-3xl font-medium self-center">
+            {{ t('pages.cart.index.Total') }}
+          </p>
+          <form class="flex justify-center" action="{{ route('cart.checkout') }}" method="post">
+            @each(app in apps)
+              <input type="hidden" name="apps" value="{{ app.id }}" />
+            @end
+            <button class="flex text-white bg-cyan-800 text-sm self-center px-4 py-2" type="submit">
+              {{ t('pages.cart.index.Checkout') }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+@end

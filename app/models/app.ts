@@ -6,6 +6,7 @@ import type { HasMany, ManyToMany } from '@adonisjs/lucid/types/relations'
 import Publisher from '#models/publisher'
 import Developer from '#models/developer'
 import Tag from '#models/tag'
+import Cart from '#models/cart'
 
 export default class App extends BaseModel {
   @column({ isPrimary: true })
@@ -39,6 +40,9 @@ export default class App extends BaseModel {
   declare recomendedRequirements: string
 
   @column()
+  declare recommendations: number
+
+  @column()
   declare releaseDate: string
 
   @column()
@@ -46,6 +50,9 @@ export default class App extends BaseModel {
 
   @column()
   declare background: string
+
+  @column()
+  declare cartId: number
 
   @hasMany(() => Screenshot)
   declare screenshots: HasMany<typeof Screenshot>
@@ -61,6 +68,9 @@ export default class App extends BaseModel {
 
   @manyToMany(() => Tag)
   declare tags: ManyToMany<typeof Tag>
+
+  @manyToMany(() => Cart)
+  declare carts: ManyToMany<typeof Cart>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
